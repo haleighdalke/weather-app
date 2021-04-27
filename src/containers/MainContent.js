@@ -1,75 +1,58 @@
 import React, {Component} from 'react';
 import WeatherCard from './WeatherCard';
 import Header from '../components/Header';
-
+import {fetchWeatherData} from '../HandleAPI'
 class MainContent extends React.Component {
-
-    apiWeather = {
-      "cod": "200",
-      "message": 0.0179,
-      "cnt": 96,
-      "list": [
-       {
-         "dt": 1596632400,
-         "main": {
-           "temp": 289.16,
-           "feels_like": 288.41,
-           "temp_min": 289.16,
-           "temp_max": 289.16,
-           "pressure": 1013,
-           "sea_level": 1013,
-           "grnd_level": 1010,
-           "humidity": 78,
-           "temp_kf": 0
-         },
-         "weather": [
-           {
-             "id": 804,
-             "main": "Clouds",
-             "description": "overcast clouds",
-             "icon": "04n"
-           }
-         ],
-         "clouds": {
-           "all": 100
-         },
-         "wind": {
-           "speed": 2.03,
-           "deg": 252,
-           "gust":5.46
-         },
-         "visibility": 10000,
-         "pop": 0.04,
-         "sys": {
-           "pod": "n"
-         },
-         "dt_txt": "2020-08-05 13:00:00"
-       }],
-      "city": {
-       "id": 2643743,
-       "name": "London",
-       "coord": {
-         "lat": 51.5085,
-         "lon": -0.1258
-       },
-       "country": "GB",
-       "timezone": 0,
-       "sunrise": 1568958164,
-       "sunset": 1569002733
-      }
-    };    
-    
-    weatherData = {
-        "condition" : this.apiWeather.list[0].weather[0].main
-    }
-
-    renderWeatherCards = () => {
-        return <WeatherCard weatherData={this.weatherData}></WeatherCard>
-    }
 
     constructor() {
         super();
+        this.state = {
+            weatherData: [
+                {
+                    "condition": null
+                }
+            ]
+        }
     }
+
+    componentDidMount(){
+        this.fetchWeatherData()
+    }
+
+
+
+    renderWeatherCards = () => {
+        return <WeatherCard weatherData={this.state.weatherData[0]}></WeatherCard>
+    }
+
+    parseWeatherData = (rawWeatherData) => {
+        // debugger
+        return rawWeatherData.list.map(hour => {
+            return {
+                "date": hour.dt_text,
+                "condition": hour.weather[0].main,
+                "currentTemp": hour.main.temp,
+                "feelsLike": hour.main.feels_like,
+                "maxTemp": hour.main.temp_max,
+                "minTemp": hour.main.temp_min
+            }
+        })
+        
+    }
+    fetchWeatherData = () => {
+        let response = null;
+        fetch("https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/forecast?zip=11201&appid=69d7f9c22368119f2b5294225dc8d136&units=imperial")
+        .then(response => response.json())
+        .then(data => {
+            let cleanWeatherData = this.parseWeatherData(data)
+            this.setState({
+                weatherData: cleanWeatherData
+            })
+        })
+        .catch(err => response = "Failed")
+        return response;
+    }
+
 
     render(){
         return (
@@ -77,6 +60,7 @@ class MainContent extends React.Component {
                 <Header></Header>
                 {/* container for all the cards */}
                 {this.renderWeatherCards()}
+                {console.log(this.state.weatherData)}
             </div>
         )
     }

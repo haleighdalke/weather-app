@@ -1,5 +1,5 @@
 import WeatherCard from "../containers/WeatherCard";
-import { WiDaySunny, WiCloudy, WiBarometer } from "weather-icons-react";
+import { WiDaySunny, WiCloudy, WiRain, WiBarometer } from "weather-icons-react";
 
 function WeatherIcon({condition}) {
 
@@ -7,8 +7,11 @@ function WeatherIcon({condition}) {
         case "Clouds":
             return <WiCloudy size={200} color="blue" />
             break;
-        case "Sun":
+        case "Clear":
             return <WiDaySunny size={200} color="yellow" />
+            break;
+        case "Rain":
+            return <WiRain size={200} color="grey" />
             break;
         default:
             return <WiBarometer size={200} color="red" />
