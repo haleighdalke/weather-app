@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import WeatherCard from './WeatherCard';
 import Header from '../components/Header';
-import {fetchWeatherData} from '../HandleAPI'
+
 class MainContent extends React.Component {
 
     constructor() {
@@ -22,14 +22,14 @@ class MainContent extends React.Component {
 
 
     renderWeatherCards = () => {
-        return <WeatherCard weatherData={this.state.weatherData[0]}></WeatherCard>
+        return this.state.weatherData.map(hour => <WeatherCard weatherData={hour}></WeatherCard>)
     }
 
     parseWeatherData = (rawWeatherData) => {
         // debugger
         return rawWeatherData.list.map(hour => {
             return {
-                "date": hour.dt_text,
+                "date": hour.dt_txt,
                 "condition": hour.weather[0].main,
                 "currentTemp": hour.main.temp,
                 "feelsLike": hour.main.feels_like,

@@ -11,11 +11,13 @@ function WeatherCard({weatherData})  {
             <CardBody>
                 <WeatherIcon condition={weatherData.condition}></WeatherIcon>
                 <CardText>
-                    Hi
+                    {weatherData.date}
                 </CardText>
             </CardBody>
             <CardFooter>
-                47 and 50
+                <span className="mr-auto text-danger">{weatherData.maxTemp}</span>
+                <span className="ml-auto text-primary">{weatherData.minTemp}</span>
+
             </CardFooter>
         </Card>
         
