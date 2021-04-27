@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import WeatherCard from './WeatherCard';
-
+import Header from '../components/Header';
 
 class MainContent extends React.Component {
 
@@ -74,6 +74,8 @@ class MainContent extends React.Component {
     render(){
         return (
             <div>
+                <Header></Header>
+                {/* container for all the cards */}
                 {this.renderWeatherCards()}
             </div>
         )

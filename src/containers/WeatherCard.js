@@ -4,7 +4,7 @@ import { Card, CardHeader, CardFooter, CardText, CardBody, CardTitle, CardSubtit
 function WeatherCard({weatherData})  {
 
     return(
-        <Card className="col-3 offset-1">
+        <Card className="col-2 offset-1">
             <CardHeader>
                 Monday
             </CardHeader>
