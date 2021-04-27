@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { WiDaySunny, WiCloudy, WiBarometer } from "weather-icons-react";
+import WeatherCard from './WeatherCard';
 
 
 class MainContent extends React.Component {
@@ -58,29 +58,19 @@ class MainContent extends React.Component {
        "sunset": 1569002733
       }
     };    
+    
+    weatherData = {
+        "condition" : this.apiWeather.list[0].weather[0].main
+    }
 
     constructor() {
         super();
     }
 
-    renderWeatherIcon = (condition) => {
-        switch (condition) {
-            case "Clouds":
-                return <WiCloudy size={200} color="blue" />
-                break;
-            case "Sun":
-                return <WiDaySunny size={200} color="yellow" />
-                break;
-            default:
-                return <WiBarometer size={200} color="red" />
-                break;
-        }
-    }
-
     render(){
         return (
             <div>
-                {this.renderWeatherIcon(this.apiWeather.list[0].weather[0].main)}
+                <WeatherCard weatherData={this.weatherData}></WeatherCard>
             </div>
         )
     }
