@@ -1,11 +1,24 @@
 import WeatherIcon from '../components/WeatherIcon'
+import { Card, CardHeader, CardFooter, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 function WeatherCard({weatherData})  {
 
     return(
-        <div>
-            <WeatherIcon condition={weatherData.condition}></WeatherIcon>
-        </div>
+        <Card className="col-3 offset-1">
+            <CardHeader>
+                Monday
+            </CardHeader>
+            <CardBody>
+                <WeatherIcon condition={weatherData.condition}></WeatherIcon>
+                <CardText>
+                    Hi
+                </CardText>
+            </CardBody>
+            <CardFooter>
+                47 and 50
+            </CardFooter>
+        </Card>
+        
     )
     
 }

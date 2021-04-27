@@ -63,6 +63,10 @@ class MainContent extends React.Component {
         "condition" : this.apiWeather.list[0].weather[0].main
     }
 
+    renderWeatherCards = () => {
+        return <WeatherCard weatherData={this.weatherData}></WeatherCard>
+    }
+
     constructor() {
         super();
     }
@@ -70,7 +74,7 @@ class MainContent extends React.Component {
     render(){
         return (
             <div>
-                <WeatherCard weatherData={this.weatherData}></WeatherCard>
+                {this.renderWeatherCards()}
             </div>
         )
     }
