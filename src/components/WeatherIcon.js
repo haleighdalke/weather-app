@@ -1,4 +1,4 @@
-import WeatherCard from "../containers/WeatherCard";
+import WeatherCard from "./WeatherCard";
 import { WiDaySunny, WiCloudy, WiRain, WiBarometer } from "weather-icons-react";
 
 function WeatherIcon({condition}) {

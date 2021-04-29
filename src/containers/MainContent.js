@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import WeatherCard from './WeatherCard';
 import Header from '../components/Header';
+import WeatherCards from './WeatherCards'
+import {CardColumns, Column} from 'reactstrap'
 
 class MainContent extends React.Component {
 
@@ -17,12 +18,6 @@ class MainContent extends React.Component {
 
     componentDidMount(){
         this.fetchWeatherData()
-    }
-
-
-
-    renderWeatherCards = () => {
-        return this.state.weatherData.map(hour => <WeatherCard weatherData={hour}></WeatherCard>)
     }
 
     parseWeatherData = (rawWeatherData) => {
@@ -59,7 +54,8 @@ class MainContent extends React.Component {
             <div>
                 <Header></Header>
                 {/* container for all the cards */}
-                {this.renderWeatherCards()}
+                {/* {this.renderWeatherCards()} */}
+                <WeatherCards weatherData={this.state.weatherData}></WeatherCards>
                 {console.log(this.state.weatherData)}
             </div>
         )

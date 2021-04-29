@@ -1,12 +1,16 @@
-import WeatherIcon from '../components/WeatherIcon'
+import WeatherIcon from './WeatherIcon'
 import { Card, CardHeader, CardFooter, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
 
-function WeatherCard({weatherData})  {
+export default function WeatherCard({weatherData})  {
+
+    let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    let weekDay = new Date(weatherData.date).getDay()
+    let previousWeekDay = weekDay
 
     return(
-        <Card className="col-2 offset-1">
+        <Card className="col-2">
             <CardHeader>
-                Monday
+                {daysOfTheWeek[weekDay]}
             </CardHeader>
             <CardBody>
                 <WeatherIcon condition={weatherData.condition}></WeatherIcon>
@@ -20,9 +24,5 @@ function WeatherCard({weatherData})  {
 
             </CardFooter>
         </Card>
-        
     )
-    
 }
-
-export default WeatherCard;
