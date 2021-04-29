@@ -72,13 +72,12 @@ class MainContent extends React.Component {
 
     render(){
         return (
-            <Container>
+            <div>
                 <Header></Header>
                 {/* container for all the cards */}
                 {/* {this.renderWeatherCards()} */}
                 {this.state.weatherData != null ? <WeatherCards weatherData={this.state.weatherData}></WeatherCards> : null}
-                {console.log(this.state.weatherData)}
-            </Container>
+            </div>
         )
     }
 }

@@ -13,17 +13,27 @@ export default class WeatherCard extends React.Component  {
         }
     }
 
-    getWeekDay = () => {
-        let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-        let day = new Date(this.props.weatherData[0].date).getDay()
-        return daysOfTheWeek[day]
+    getFormattedDate = () => {
+        // let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        // let day = new Date(this.props.weatherData[0].date).getDay()
+        // return daysOfTheWeek[day]
+        return new Date(this.props.weatherData[0].date).toDateString()
     }
 
     renderTableRows = () => {
         return this.props.weatherData.map((hour, i)=> {
             // debugger
             let timeInHours = new Date(hour.date).getHours()
-            let time = timeInHours > 12 ? timeInHours-12 + "pm" : timeInHours + "am"
+            let time;
+            if(timeInHours == 0){
+                time = "12:00am"
+            }else if(timeInHours == 12){
+                time = timeInHours + ":00pm"
+            }else if(timeInHours > 12){
+                time = timeInHours - 12 + ":00pm"
+            }else{
+                time = timeInHours + ":00am"
+            }
             return(
                 <tr onMouseEnter={() => this.handleRowMouseEnter(hour)} onMouseLeave={() => this.handleRowMouseLeave()} id={"hour" + i}>
                     <th scope="row">{time}</th>
@@ -44,26 +54,16 @@ export default class WeatherCard extends React.Component  {
 
     render() {
         return(
-            <Card className="col-lg mx-1">
-                <CardHeader>
-                    {this.getWeekDay()}
-                    <WeatherIcon condition={this.state.currentHour ? this.state.currentHour.condition : this.props.weatherData[0].condition}></WeatherIcon>
-                </CardHeader>
+            <Card className="col-lg mx-1 bg-light">
                 <CardBody>
+                    <CardTitle className="">{this.getFormattedDate()}</CardTitle>
+                    <WeatherIcon condition={this.state.currentHour ? this.state.currentHour.condition : this.props.weatherData[0].condition}></WeatherIcon>
                     <Table size="sm" borderless hover>
                         <tbody>
                             {this.renderTableRows()}
                         </tbody>
-                        
                     </Table>
-                    <CardText>
-                        {this.props.weatherData[0].date}
-                    
-                    <span className="mr-auto text-danger">{this.props.weatherData[0].maxTemp}</span>
-                    <span className="ml-auto text-primary">{this.props.weatherData[0].minTemp}</span>
-                    </CardText>
                 </CardBody>
-    
             </Card>
         )
     }
