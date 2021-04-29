@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
 import Header from '../components/Header';
 import WeatherCards from './WeatherCards'
-import {CardColumns, Column} from 'reactstrap'
+import {Container} from 'reactstrap'
 
 class MainContent extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            weatherData: [
-                {
-                    "condition": null
-                }
-            ]
+            weatherData: null
         }
     }
 
@@ -34,14 +30,39 @@ class MainContent extends React.Component {
         })
         
     }
+
+    formatWeatherData = (cleanWeatherData) => {
+        // debugger
+    
+        let formattedWeatherData = []
+        let currentDayWeatherData = []
+        let previousDay = (new Date(cleanWeatherData[0].date)).getDay()
+    
+        for(let i = 0; i < cleanWeatherData.length; i++){
+            let currentDay = (new Date(cleanWeatherData[i].date)).getDay()
+            if(previousDay != currentDay){
+                formattedWeatherData.push(currentDayWeatherData)
+                currentDayWeatherData = []
+            }
+            currentDayWeatherData.push(cleanWeatherData[i])
+            previousDay = currentDay
+        }
+    
+        // debugger
+        return formattedWeatherData
+    
+    
+    }
+
     fetchWeatherData = () => {
         let response = null;
         fetch("https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/forecast?zip=11201&appid=69d7f9c22368119f2b5294225dc8d136&units=imperial")
         .then(response => response.json())
         .then(data => {
             let cleanWeatherData = this.parseWeatherData(data)
+            let formattedWeatherData = this.formatWeatherData(cleanWeatherData)
             this.setState({
-                weatherData: cleanWeatherData
+                weatherData: formattedWeatherData
             })
         })
         .catch(err => response = "Failed")
@@ -51,13 +72,13 @@ class MainContent extends React.Component {
 
     render(){
         return (
-            <div>
+            <Container>
                 <Header></Header>
                 {/* container for all the cards */}
                 {/* {this.renderWeatherCards()} */}
-                <WeatherCards weatherData={this.state.weatherData}></WeatherCards>
+                {this.state.weatherData != null ? <WeatherCards weatherData={this.state.weatherData}></WeatherCards> : null}
                 {console.log(this.state.weatherData)}
-            </div>
+            </Container>
         )
     }
 }

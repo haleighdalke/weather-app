@@ -2,21 +2,25 @@ import { Row } from 'reactstrap';
 import WeatherCard from '../components/WeatherCard'
 
 export default function WeatherCards({weatherData}) {
-    let formattedWeatherData = []
+    // // debugger
 
-    for(let i = 0; i < weatherData.length-5; i+=5){  
-        formattedWeatherData.push(
-            <Row>
-                <WeatherCard weatherData={weatherData[i]}></WeatherCard>
-                <WeatherCard weatherData={weatherData[i+1]}></WeatherCard>
-                <WeatherCard weatherData={weatherData[i+2]}></WeatherCard>
-                <WeatherCard weatherData={weatherData[i+3]}></WeatherCard>
-                <WeatherCard weatherData={weatherData[i+4]}></WeatherCard>
-            </Row>
-        )
-    }
+    // let formattedWeatherData = []
+    // let currentDayWeatherData = []
+    // let previousDay = (new Date(weatherData[0].date)).getDay()
 
-    return formattedWeatherData
+    // for(let i = 0; i < weatherData.length; i++){
+    //     let currentDay = (new Date(weatherData[i].date)).getDay()
+    //     if(previousDay != currentDay){
+    //         formattedWeatherData.push(currentDayWeatherData)
+    //         currentDayWeatherData = []
+    //     }
+    //     currentDayWeatherData.push(weatherData[i])
+    //     previousDay = currentDay
+    // }
+
+    // // debugger
+    // return formattedWeatherData
 
 
+    return weatherData.map(day => <WeatherCard weatherData={day[0]}></WeatherCard>)
 }
